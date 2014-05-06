@@ -294,6 +294,19 @@ class Route {
 	}
 
 	/**
+	 * Unset a parameter on the route if it is set.
+	 *
+	 * @param  string $name
+	 * @return void
+	 */
+	public function forgetParameter($name)
+	{
+		$this->parameters();
+
+		unset($this->parameters[$name]);
+	}
+
+	/**
 	 * Get the key / value list of parameters for the route.
 	 *
 	 * @return array
@@ -674,7 +687,7 @@ class Route {
 	 */
 	public function httpOnly()
 	{
-		return in_array('http', $this->action);
+		return in_array('http', $this->action, true);
 	}
 
 	/**
@@ -694,7 +707,7 @@ class Route {
 	 */
 	public function secure()
 	{
-		return in_array('https', $this->action);
+		return in_array('https', $this->action, true);
 	}
 
 	/**
@@ -728,6 +741,16 @@ class Route {
 		$this->uri = $uri;
 
 		return $this;
+	}
+
+	/**
+	 * Get the prefix of the route instance.
+	 *
+	 * @return string
+	 */
+	public function getPrefix()
+	{
+		return array_get($this->action, 'prefix');
 	}
 
 	/**
